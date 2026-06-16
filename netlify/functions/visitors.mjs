@@ -43,13 +43,14 @@ export default async (req) => {
     return json({ ok: true });
   }
 
-  // 통계 조회: 비밀키 필요 (없거나 틀리면 403)
+  // 통계 조회: 키 없으면 공개 수치만, 키 있으면 전체
   const key = url.searchParams.get("key") || req.headers.get("x-dash-key") || "";
-  if (!DASH_KEY || key !== DASH_KEY) return json({ error: "unauthorized" }, 403);
-
-  const online = Object.values(data.presence).filter((ts) => now - ts <= ONLINE_WINDOW).length;
   const unique = Object.keys(data.uniques).length;
-  return json({ online, unique, views: data.views, ts: now });
+  if (DASH_KEY && key === DASH_KEY) {
+    const online = Object.values(data.presence).filter((ts) => now - ts <= ONLINE_WINDOW).length;
+    return json({ online, unique, views: data.views, ts: now });
+  }
+  return json({ unique, views: data.views });
 };
 
 export const config = { path: "/api/visitors" };

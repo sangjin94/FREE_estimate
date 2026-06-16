@@ -502,6 +502,7 @@ input.de-in[type=number]::-webkit-outer-spin-button,input.de-in[type=number]::-w
     <a href="contact.html" style="color:var(--primary);text-decoration:none;margin:0 8px">문의</a>
   </div>
   <span style="font-size:.72rem">모든 데이터는 서버에 저장되지 않으며 사용자의 브라우저에서만 처리됩니다. © 2026 견적콩</span>
+  <div style="margin-top:10px;font-size:.75rem;color:var(--muted)">누적 방문자 <b id="visit-count" style="color:var(--primary)">…</b> 명</div>
 </footer>
 
 <datalist id="unit-list">
@@ -1478,6 +1479,13 @@ if(sealDataURL){
 drawStamp();
 </script>
 <!-- 실시간 방문자 카운터 트래커 -->
-<script>(function(){function p(){fetch('/api/visitors',{method:'POST'}).catch(function(){})}p();setInterval(p,30000);}());</script>
+<script>(function(){
+  function p(){fetch('/api/visitors',{method:'POST'}).catch(function(){})}
+  p();setInterval(p,30000);
+  fetch('/api/visitors').then(function(r){return r.json();}).then(function(d){
+    var el=document.getElementById('visit-count');
+    if(el&&d.unique!=null)el.textContent=Number(d.unique).toLocaleString('ko-KR');
+  }).catch(function(){});
+}());</script>
 </body>
 </html>
