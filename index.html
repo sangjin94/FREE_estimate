@@ -469,6 +469,34 @@ input.de-in[type=number]::-webkit-outer-spin-button,input.de-in[type=number]::-w
 
     <p style="font-size:.77rem;color:var(--muted);margin-top:10px">* 생성된 도장 이미지는 참고용입니다. 법적 효력이 필요한 경우 관할 관청에 인감 등록이 필요합니다.</p>
   </div>
+
+  <!-- ══════════ 이용 가이드 (원본 콘텐츠) ══════════ -->
+  <section class="card" style="margin-top:24px">
+    <h2>견적콩 이용 가이드 &amp; 자주 묻는 질문</h2>
+
+    <h3 style="font-size:1rem;margin:22px 0 8px;color:var(--primary-dark)">1. 견적서란? 왜 필요한가요?</h3>
+    <p style="font-size:.9rem;color:#374151">견적서는 거래가 이루어지기 전에 공급자가 공급받는 자에게 상품·서비스의 예상 가격과 조건을 안내하는 문서입니다. 법적으로 반드시 작성해야 하는 서류는 아니지만, 거래 조건을 명확히 해 이후 발생할 수 있는 분쟁을 예방하는 역할을 합니다. 신규 거래처와 첫 거래를 시작할 때 가장 먼저 요청받는 서류이기도 합니다. 필수 기재 항목은 공급자·공급받는자 정보, 품목·수량·단가, 부가세 포함 여부, 견적 유효기간, 작성일자이며, 견적콩 서식은 이 항목들을 빠짐없이 입력하도록 구성되어 있습니다.</p>
+
+    <h3 style="font-size:1rem;margin:22px 0 8px;color:var(--primary-dark)">2. 거래명세서와 세금계산서, 무엇이 다른가요?</h3>
+    <p style="font-size:.9rem;color:#374151">거래명세서는 실제 납품·거래가 이루어졌음을 확인하기 위해 당사자끼리 주고받는 문서로, 세금계산서 발행 전후 실무에서 흔히 사용됩니다. 세금계산서는 국세청에 신고되는 법정 증빙 서류인 반면, 거래명세서는 법적 신고 의무가 없는 내부 확인용 서류입니다. 다만 품목별 거래 내역을 상세히 기록해두면 이후 세금계산서 발행이나 대금 정산 시 근거 자료로 유용하게 쓸 수 있습니다.</p>
+
+    <h3 style="font-size:1rem;margin:22px 0 8px;color:var(--primary-dark)">3. 어떤 도장을 만들어야 하나요?</h3>
+    <p style="font-size:.9rem;color:#374151">사업 현장에서 쓰이는 도장은 용도에 따라 크게 세 가지로 나뉩니다.</p>
+    <ul style="padding-left:20px;font-size:.9rem;color:#374151;line-height:1.8">
+      <li><b>법인 인감</b>: 법인 등기 시 등록하며, 중요 계약서·공문서에 사용합니다.</li>
+      <li><b>사용 도장(막도장)</b>: 견적서·거래명세서 등 일상적인 실무 서류에 사용하며 별도 등록이 필요 없습니다.</li>
+      <li><b>개인사업자 도장</b>: 사업자등록증상의 상호나 대표자명으로 제작해 세금계산서·견적서 등에 사용합니다.</li>
+    </ul>
+    <p style="font-size:.9rem;color:#374151;margin-top:8px">견적콩에서 만든 도장 이미지는 실무 서류 작성용 참고 이미지입니다. 법적 효력이 필요한 인감(법인 인감, 은행 신고 인감 등)은 반드시 관할 등기소·은행에 별도로 등록해야 합니다.</p>
+
+    <h3 style="font-size:1rem;margin:22px 0 8px;color:var(--primary-dark)">자주 묻는 질문</h3>
+    <div style="font-size:.9rem;color:#374151;line-height:1.8">
+      <p><b>Q. 작성한 견적서·도장 데이터가 서버에 저장되나요?</b><br/>A. 아니요. 모든 데이터는 브라우저 안에서만 처리되며 서버로 전송되지 않습니다. 창을 닫으면 사라지므로 중요한 문서는 PDF나 엑셀로 미리 저장해두세요.</p>
+      <p><b>Q. 도장 이미지를 인감증명서 대신 쓸 수 있나요?</b><br/>A. 아니요. 도장 이미지는 서류 작성 편의를 위한 참고용이며 법적 인감 효력이 없습니다. 계약·등기 등에는 정식 등록된 인감을 사용해야 합니다.</p>
+      <p><b>Q. 부가세 '포함'과 '별도'는 어떻게 다른가요?</b><br/>A. '포함'을 선택하면 입력한 단가에 부가세가 이미 포함된 것으로 계산되고, '별도'를 선택하면 단가와 별도로 부가세가 추가로 더해져 합계 금액이 계산됩니다.</p>
+      <p><b>Q. 여러 대의 기기에서 같은 문서를 이어서 작업할 수 있나요?</b><br/>A. 네. '저장(.json)' 버튼으로 파일을 내려받은 뒤 다른 기기에서 '불러오기'로 열면 동일한 내용을 이어서 작업할 수 있습니다.</p>
+    </div>
+  </section>
 </main>
 
 <!-- Sidebar -->
@@ -1409,84 +1437,4 @@ function exportExcel(p){
     infoRow('대표자',gv(p+'-to-rep'),'대표자',gv(p+'-from-rep'));
     infoRow('사업자번호',gv(p+'-to-biz'),'사업자번호',gv(p+'-from-biz'));
     infoRow('연락처',gv(p+'-to-tel'),'연락처',gv(p+'-from-tel')+(isQ&&gv('q-from-email')?' / '+gv('q-from-email'):''));
-    infoRow('','','주소',gv(p+'-from-addr'));
-    r++; // 여백
-
-    /* 품목 표 헤더 */
-    const thS={font:FT(10,true),alignment:C,fill:fill('F1F5F9'),border:allB};
-    ['No.','품목명','수량','단위','단가','VAT','부가세','금액'].forEach((h,c)=>set(r,c,h,thS)); r++;
-    const tdC={font:FT(10),alignment:C,border:allB};
-    const tdL={font:FT(10),alignment:Lt,border:allB};
-    const tdR={font:FT(10),alignment:Rt,border:allB,numFmt:NUM};
-    const tdQ={font:FT(10),alignment:C,border:allB,numFmt:NUM};
-    items.forEach((it,i)=>{
-      set(r,0,i+1,tdC); set(r,1,it.name,tdL); set(r,2,it.qty,tdQ); set(r,3,it.unit,tdC);
-      set(r,4,it.price,tdR); set(r,5,it.vatPct+'%',tdC); set(r,6,it.vat,tdR); set(r,7,it.amt,tdR); r++;
-    });
-    for(let i=items.length;i<8;i++){ for(let c=0;c<=7;c++)set(r,c,'',c===1?tdL:tdC); r++; }
-
-    /* 합계 */
-    const totLab={font:FT(10,true),alignment:Rt,fill:fill('F1F5F9'),border:allB};
-    const totVal={font:FT(10,true),alignment:Rt,border:allB,numFmt:NUM};
-    const totalRow=(lab,val)=>{ set(r,0,lab,totLab); for(let c=1;c<=6;c++)set(r,c,'',totLab); merge(r,0,r,6); set(r,7,val,totVal); r++; };
-    totalRow('공급가액',sub);
-    totalRow('부가세',vat);
-    const sumLab={font:FT(11,true),alignment:Rt,fill:fill('DBEAFE'),border:allB};
-    const sumVal={font:FT(11,true,'1D4ED8'),alignment:Rt,fill:fill('DBEAFE'),border:allB,numFmt:NUM};
-    set(r,0,'합계금액'+(sep?' (부가세 별도)':''),sumLab); for(let c=1;c<=6;c++)set(r,c,'',sumLab); merge(r,0,r,6); set(r,7,tot,sumVal); r++;
-    set(r,0,'일금 '+numToKorean(tot)+'원정',{font:FT(11,true),alignment:Lt,border:allB}); for(let c=1;c<=7;c++)set(r,c,'',{border:allB}); merge(r,0,r,7); r++;
-
-    /* 비고 */
-    if(gv(p+'-note')){ r++; set(r,0,'비고',labelS); set(r,1,gv(p+'-note'),valS); for(let c=2;c<=7;c++)set(r,c,'',valS); merge(r,1,r,7); r++; }
-
-    ws['!ref']=XLSX.utils.encode_range({s:{r:0,c:0},e:{r:maxR,c:7}});
-    ws['!merges']=merges;
-    ws['!cols']=[{wch:6},{wch:26},{wch:8},{wch:8},{wch:14},{wch:8},{wch:13},{wch:16}];
-    ws['!rows']=[{hpt:30}];
-
-    const wb=XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb,ws,sheetName);
-    const fname=sheetName+'_'+(gv(p+'-to-name')||'무제')+'_'+(gv(p+'-no')||'')+'.xlsx';
-    XLSX.writeFile(wb,fname);
-    toast('엑셀 파일이 다운로드되었습니다!');
-  }).catch(()=>toast('엑셀 라이브러리 로드에 실패했습니다. 인터넷 연결을 확인하세요.'));
-}
-
-/* init */
-addRow(); addRowT();
-loadMyInfo('q', true);   // 저장된 회사 정보 자동 입력
-loadMyInfo('t', true);
-
-// 입력할 때마다 미리보기 실시간 갱신 + 자동 임시저장
-['q','t'].forEach(p=>{
-  const panel=document.getElementById('panel-'+p);
-  const refresh=e=>{ if(!e.target.closest('[id$=sealrange]')) updateLive(p); };
-  panel.addEventListener('input',refresh);
-  panel.addEventListener('change',refresh);
-  panel.addEventListener('input',e=>{ if(!e.target.closest('[id$=sealrange]')) autoSave(p); });
-  panel.addEventListener('change',e=>{ if(!e.target.closest('[id$=sealrange]')) autoSave(p); });
-});
-// 페이지 로드 시 임시저장 복원 배너
-['q','t'].forEach(p=>restoreDraft(p));
-updateLive('q'); updateLive('t');
-if(sealDataURL){
-  document.getElementById('sealStatus').innerHTML =
-    `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;font-size:.82rem;color:#1d4ed8;display:flex;align-items:center;gap:10px">
-      ✅ 등록된 도장이 있습니다. 견적서·거래명세서에 자동으로 찍힙니다.
-      <img src="${sealDataURL}" style="height:36px"/>
-      <button class="btn ghost" style="padding:4px 10px;font-size:.75rem;margin-left:auto" onclick="clearSeal()">해제</button>
-    </div>`;
-}
-drawStamp();
-</script>
-<!-- 실시간 방문자 카운터 트래커 -->
-<script>(function(){
-  function p(){fetch('/api/visitors',{method:'POST'}).catch(function(){})}
-  p();setInterval(p,30000);
-  fetch('/api/visitors').then(function(r){return r.json();}).then(function(d){
-    var el=document.getElementById('visit-count');
-    if(el&&d.unique!=null)el.textContent=Number(d.unique).toLocaleString('ko-KR');
-  }).catch(function(){});
-}());</script>
-</body>
-</html>
+    infoRow('',''
