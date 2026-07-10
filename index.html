@@ -1284,12 +1284,19 @@ function loadH2C(){
 }
 
 async function copyImage(p){
-  const el=document.querySelector('#panel-'+p+' .doc-edit');
-  if(!el){ toast('문서를 먼저 작성해주세요.'); return; }
   toast('이미지 생성 중...');
   try{
     await loadH2C();
-    const canvas=await html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#fff'});
+    // 편집용 입력칸(<input>)을 직접 캡처하면 html2canvas가 글씨를 잘라먹으므로,
+    // PDF·인쇄와 동일하게 buildDocHTML로 만든 순수 텍스트 문서를 화면 밖에서 렌더링해 캡처한다.
+    const html=buildDocHTML(p==='q'?'quote':'trade');
+    const holder=document.createElement('div');
+    holder.innerHTML=html;
+    holder.style.cssText='position:fixed;left:-10000px;top:0;width:760px;background:#fff';
+    document.body.appendChild(holder);
+    const root=holder.querySelector('.doc-root');
+    const canvas=await html2canvas(root,{scale:2,useCORS:true,backgroundColor:'#fff'});
+    holder.remove();
     canvas.toBlob(async blob=>{
       if(!blob) return;
       try{
