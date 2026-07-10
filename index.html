@@ -1283,20 +1283,44 @@ function loadH2C(){
   return _h2cLoading;
 }
 
+/* 편집 화면(입력칸)을 그대로 복제하되 <input>·<select>를 정적 텍스트로 바꿔
+   화면 밖에서 캡처한다. 편집 화면과 동일한 폭·높이·행 구성을 유지하므로
+   글씨가 잘리지 않고 도장 위치(%)도 "보이는 그대로" 반영된다. */
+async function renderDocCanvas(p){
+  await loadH2C();
+  const src=document.getElementById(p+'-doc');
+  if(!src) throw new Error('doc not found');
+  const width=src.getBoundingClientRect().width;
+  const clone=src.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('input,textarea,select').forEach(el=>{
+    let val;
+    if(el.tagName==='SELECT') val = el.value==='' ? '' : (el.options[el.selectedIndex]?.text||'');
+    else val = el.value||'';
+    const cs=getComputedStyle(el);
+    const span=document.createElement('span');
+    span.textContent=val;
+    span.style.cssText='display:inline-block;width:'+(el.style.width||'100%')+';box-sizing:border-box;'
+      +'white-space:pre-wrap;word-break:break-word;vertical-align:middle;'
+      +'text-align:'+cs.textAlign+';font-size:'+cs.fontSize+';font-weight:'+cs.fontWeight
+      +';color:'+cs.color+';line-height:'+cs.lineHeight;
+    el.replaceWith(span);
+  });
+  clone.querySelectorAll('.no-print,.del-td').forEach(el=>el.remove());
+  clone.style.cssText='position:fixed;left:-10000px;top:0;margin:0;max-width:none;width:'+width+'px;'
+    +'border:none;box-shadow:none;border-radius:0;background:#fff';
+  document.body.appendChild(clone);
+  try{
+    // 이미지·폰트가 확실히 그려지도록 한 프레임 양보
+    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+    return await html2canvas(clone,{scale:2,useCORS:true,backgroundColor:'#fff'});
+  } finally { clone.remove(); }
+}
+
 async function copyImage(p){
   toast('이미지 생성 중...');
   try{
-    await loadH2C();
-    // 편집용 입력칸(<input>)을 직접 캡처하면 html2canvas가 글씨를 잘라먹으므로,
-    // PDF·인쇄와 동일하게 buildDocHTML로 만든 순수 텍스트 문서를 화면 밖에서 렌더링해 캡처한다.
-    const html=buildDocHTML(p==='q'?'quote':'trade');
-    const holder=document.createElement('div');
-    holder.innerHTML=html;
-    holder.style.cssText='position:fixed;left:-10000px;top:0;width:760px;background:#fff';
-    document.body.appendChild(holder);
-    const root=holder.querySelector('.doc-root');
-    const canvas=await html2canvas(root,{scale:2,useCORS:true,backgroundColor:'#fff'});
-    holder.remove();
+    const canvas=await renderDocCanvas(p);
     canvas.toBlob(async blob=>{
       if(!blob) return;
       try{
@@ -1333,15 +1357,8 @@ function exportPDF(p){
   toast('PDF 생성 중... 잠시만 기다려주세요');
   loadPDFLib().then(async()=>{
     const isQ=(p==='q');
-    const html=buildDocHTML(isQ?'quote':'trade');
-    const holder=document.createElement('div');
-    holder.innerHTML=html;
-    holder.style.cssText='position:fixed;left:-10000px;top:0;width:760px;background:#fff';
-    document.body.appendChild(holder);
-    const root=holder.querySelector('.doc-root');
     try{
-      const canvas=await html2canvas(root,{scale:2,useCORS:true,backgroundColor:'#fff'});
-      holder.remove();
+      const canvas=await renderDocCanvas(p);
 
       const {jsPDF}=window.jspdf;
       const pdf=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
@@ -1368,7 +1385,7 @@ function exportPDF(p){
       const fname=(isQ?'견적서':'거래명세서')+'_'+(gv(p+'-to-name')||'무제')+'_'+(gv(p+'-no')||'')+'.pdf';
       pdf.save(fname);
       toast('PDF가 다운로드되었습니다!');
-    }catch(e){ holder.remove(); toast('PDF 생성에 실패했습니다.'); }
+    }catch(e){ toast('PDF 생성에 실패했습니다.'); }
   }).catch(()=>toast('PDF 라이브러리 로드에 실패했습니다. 인터넷 연결을 확인하세요.'));
 }
 
